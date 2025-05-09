@@ -1,0 +1,55 @@
+Step1: # build new the image
+    root@jayakumar:/home/jayakumar/projects/code/programs/DockerFile# docker build -t test-image .
+
+Step2: list out the total images
+    root@jayakumar:/home/jayakumar/projects/code/programs/DockerFile# docker images
+    REPOSITORY    TAG         IMAGE ID       CREATED              SIZE
+    test-image    latest      d3de8af40846   7 seconds ago        135MB
+
+step3: run the images
+    root@jayakumar:/home/jayakumar/projects/code/programs/DockerFile# docker run -p 5011:5011 test-image
+    * Serving Flask app 'TestDocker'
+    * Debug mode: on
+    WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+    * Running on all addresses (0.0.0.0)
+    * Running on http://127.0.0.1:5011
+    * Running on http://172.17.0.2:5011
+
+##############################################################
+step4: after code changes again new image create and release based on version wise
+    root@jayakumar:/home/jayakumar/projects/code/programs/DockerFile# docker build -t test-image:v1 .
+
+step5:
+    root@jayakumar:/home/jayakumar/projects/code/programs/DockerFile# docker images
+    REPOSITORY    TAG         IMAGE ID       CREATED          SIZE
+    test-image    v1          630867788597   5 seconds ago    135MB
+    test-image    latest      d3de8af40846   4 minutes ago    135MB
+
+step6:
+    root@jayakumar:/home/jayakumar/projects/code/programs/DockerFile# docker run -p 5011:5011 test-image:v1
+    * Serving Flask app 'TestDocker'
+    * Debug mode: on
+    WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+    * Running on all addresses (0.0.0.0)
+    * Running on http://127.0.0.1:5011
+    * Running on http://172.17.0.2:5011
+
+    
+
+########## Remove the Image ##############
+^Croot@jayakumar:/home/jayakumar/projects/code/programs/DockerFile# docker images
+REPOSITORY    TAG         IMAGE ID       CREATED          SIZE
+test-image    v1          630867788597   7 minutes ago    135MB
+test-image    latest      d3de8af40846   12 minutes ago   135MB
+<none>        <none>      649c9813d3f3   12 minutes ago   125MB
+<none>        <none>      c5660be6c0ac   13 minutes ago   78.1MB
+<none>        <none>      9dbba2313c5d   14 minutes ago   78.1MB
+<none>        <none>      517e0f3a9b08   15 minutes ago   78.1MB
+<none>        <none>      f49ad9eacc52   16 minutes ago   78.1MB
+<none>        <none>      b2a267f2bc91   29 minutes ago   124MB
+python        3.9-slim    473b3636d11e   2 weeks ago      125MB
+python        3.12-slim   3ebf71e88841   2 weeks ago      124MB
+redhat/ubi8   latest      4f03f39cd427   3 months ago     205MB
+ubuntu        latest      61b2756d6fa9   3 months ago     78.1MB
+
+root@jayakumar:/home/jayakumar/projects/code/programs/DockerFile# docker rmi -f 649c9813d3f3 c5660be6c0ac 9dbba2313c5d 517e0f3a9b08 f49ad9eacc52
